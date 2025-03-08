@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,6 +19,7 @@ public class Appointment {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 	 	private Long id;
+		
 		
 		@Column(name = "first_name")
 		@NotNull(message = "Please Enter Your FirstName")

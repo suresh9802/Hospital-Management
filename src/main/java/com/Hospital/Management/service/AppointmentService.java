@@ -6,7 +6,7 @@ import com.Hospital.Management.entity.Appointment;
 
 public interface AppointmentService {
 	
-	 Appointment scheduleAppointment(Appointment appointment);
+	 Appointment scheduleAppointment(Long patientId, Long doctorId, Appointment appointment);
 	 List<Appointment> getAllAppointments();
 	 Appointment getAppointmentById(Long id);
 	 Appointment updateAppointmentById(Long id, Appointment appointment);

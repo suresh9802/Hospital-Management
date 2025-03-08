@@ -6,13 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Hospital.Management.entity.Appointment;
+import com.Hospital.Management.entity.Doctor;
+import com.Hospital.Management.entity.Patient;
 import com.Hospital.Management.repository.AppointmentRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 	
 	@Autowired
 	private AppointmentRepository appointmentRepository;
+	
+	@Autowired
+	private PatientService patientService;
+	
+	@Autowired
+	private DoctorService doctorService;
 
 	@Override
 	public List<Appointment> getAllAppointments() {
@@ -27,10 +37,16 @@ public class AppointmentServiceImpl implements AppointmentService {
 			new RuntimeException("Appointments not found with id:" +id));	
 	}
 
+	@Transactional
 	@Override
-	public Appointment scheduleAppointment(Appointment appointment) {
+	public Appointment scheduleAppointment(Long patientId,Long doctorId, Appointment appointment) {
 		// TODO Auto-generated method stub
+		Patient patient = patientService.getPatientById(patientId);
+		Doctor doctor = doctorService.getDoctorById(doctorId);
+		appointment.setPatient(patient);
+		appointment.setDoctor(doctor);
 		return appointmentRepository.save(appointment);
+		
 	}
 
 	@Override

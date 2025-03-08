@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,16 +19,18 @@ import com.Hospital.Management.entity.Appointment;
 import com.Hospital.Management.service.AppointmentService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("api/appointment")
 public class AppointmentController {
 	
 	@Autowired
 	private AppointmentService appointmentService;
 	
-	@PostMapping
-	public ResponseEntity<Appointment> scheduleAppointment(@RequestBody Appointment appointment) {
-		return new ResponseEntity<Appointment> (appointmentService.scheduleAppointment(appointment),HttpStatus.CREATED);
+	@PostMapping("/{patientId}/{doctorId}")
+	public ResponseEntity<Appointment> scheduleAppointment(@PathVariable("patientId") long patientId,@PathVariable("doctorId") long doctorId, @RequestBody Appointment appointment) {
+		return new ResponseEntity<Appointment> (appointmentService.scheduleAppointment(patientId,doctorId,appointment),HttpStatus.CREATED);
 	}
+	
 	
 	@GetMapping
 	public List<Appointment> getAllAppointments() {
